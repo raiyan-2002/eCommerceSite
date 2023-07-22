@@ -1,0 +1,109 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if bad_message %}
+        <div class="alert alert-danger" role="alert">
+            {{bad_message}}
+        </div>
+    {% endif %}
+
+    {% if good_message %}
+        <div class="alert alert-success" role="alert">
+            {{good_message}}
+        </div>
+    {% endif %}
+
+<div class="container1">
+    <h2>{{listing.title}}</h2>
+    <br>
+    <img class = "listing_img" src="{{listing.image}}" alt="No Image">
+    <br>
+    <br>
+    <h4><b>Price:</b> ${{listing.price}}</h4>
+    {% if listing.active %}
+        <p>
+            Currently {{bid_count}} bid(s).
+            {% if request.user == recent_bidder %}
+                Your bid is the most recent bid.
+            {% elif recent_bidder %}
+                <b>{{recent_bidder}}</b>'s bid is the most recent bid.
+            {% endif %}
+        </p>
+    {% elif not listing.active %}
+        <p>
+            <b>
+                {% if recent_bidder %}
+                    {{recent_bidder}} has won the auction!
+                {% else %}
+                    No one won the auction.
+                {% endif %}
+            </b>
+        </p>
+    {% endif %}
+    {% if user.is_authenticated and listing.active %}
+        {% if request.user != listing.user %}
+            {% if request.user not in watchers %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-outline-dark" name="watchlist" type="submit" value="Watchlist">
+                </form>
+            {% elif request.user in watchers %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-outline-dark" name="rm_watchlist" type="submit" value="Remove from Watchlist">
+                </form>
+            {% endif %}
+        {% elif request.user == listing.user %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <input class="btn btn-outline-danger" name="close" type="submit" value="Close Auction">
+            </form>
+        {% endif %}
+    {% endif %}
+    <br>
+    <p>{{listing.description}} </p>
+    Details:
+    <ul>
+        <li>Sold by: {{listing.user}}</li>
+        {% if listing.category == None %}
+            <li>Category: Unspecified </li>
+        {% else %}
+            <li>Category: {{listing.category}}</li>
+        {% endif %}
+    </ul>
+    {% if user.is_authenticated and listing.active %}
+        {% if request.user != listing.user %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" step=".01" type="number" placeholder="Bid" name = "bid" autofocus>
+                </div>
+                <input class="btn btn-outline-dark" name="bid_button" type="submit" value="Place Bid">
+            </form>
+        {% endif %}
+    {% endif %}
+    <br>
+    <h3>Comments</h3>
+    {% for comment in comments %}
+        <b>{{comment.user}}</b>:
+        <p>{{comment.description}}</p>
+        
+        <br>
+    {% empty %}
+        <p>No comments yet!</p>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Comment" name = "comment" autofocus></textarea>
+            </div>
+            <input class="btn btn-outline-dark" name="comment_button" type="submit" value="Comment">
+        </form>
+    {% endif %}
+    
+</div>
+
+
+{% endblock %}

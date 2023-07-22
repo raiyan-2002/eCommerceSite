@@ -1,0 +1,78 @@
+body {
+    padding: 10px;
+    background-color: rgb(104, 101, 101);
+    color: lightgray;
+}
+
+.listing_icon img {
+
+    height: 32vh;
+    width: auto;
+    max-width: 55vh;
+}
+
+.container {
+  height: 50vh;
+  position: relative;
+  border: 3px solid lightgrey;
+  background-color: white;
+  color: black;
+}
+
+
+#heading, .page_title {
+    text-align: center;
+}
+
+.category {
+    color: lightgrey;
+}
+
+.category:hover {
+    text-decoration: underline;
+    color:lightgrey;
+}
+
+.listing_icon {
+    float: right;
+    margin: 5vh;
+    align-items: center;
+    text-align: center;
+    width: 45%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+
+.listing_info {
+    float: left;
+    margin: 5vh;
+    word-wrap:break-word; 
+    width: 35%;
+}
+
+.listing_info a {
+    color: black;
+}
+
+.listing_info a:hover {
+    text-decoration: underline;
+    color:black;
+}
+
+.container1 {
+    position: relative;
+    border: 3px solid lightgrey;
+    background-color: white;
+    color: black;
+    margin: 3vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.listing_img {
+    height: 40vh;
+    width: auto;
+}

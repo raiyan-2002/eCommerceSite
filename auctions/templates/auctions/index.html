@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="page_title">{{page_text}}</h2>
+    <br>
+    {% for listing in listings %}
+        <div class="container">
+            <div class="test">
+                <div class="listing_icon">
+                    <img src="{{listing.image}}" alt="No Image">
+                </div>
+            </div>
+            <div class="listing_info">
+                <a href="{% url 'listing' listing.listing_id %}"><h1>{{listing.title}}</h1></a>
+                <br>
+                <h4><b>Price:</b> ${{listing.price}}</h4>
+                <br>
+                <p>{{listing.description |truncatechars:500}}  </p>
+                <h6>Sold by: {{listing.user}}</h6>
+            </div>
+        </div>
+        <br>
+    {% empty %}
+        <h3 class="page_title">No listings to show.</h3>
+    {% endfor %}
+
+{% endblock %}
